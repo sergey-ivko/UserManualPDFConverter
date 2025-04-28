@@ -8,8 +8,8 @@
  - Определение языка: Автоматическое определение языка документа
  - Извлечение аннотации: Получение аннотации/резюме документа
 
-Использование
-Базовый пример
+Базовый пример использования:
+```python
 from user_manual_pdf_converter import pdf_converter
 
 # Инициализация конвертера
@@ -20,8 +20,8 @@ reader = pdf_converter(
 
 # Загрузка PDF файла
 documents = reader.load_data("техническое_руководство.pdf")
-
-Структура результата
+```
+Структура результата.  
 Метод load_data() возвращает список объектов Document:
 1. Корневой документ: Содержит метаданные всего PDF файла
  - Тип: "root_doc"
@@ -30,8 +30,8 @@ documents = reader.load_data("техническое_руководство.pdf"
  - Тип: "section"
  - Включает: иерархическую структуру, диапазон страниц, таблицы, координаты областей
 
-Дополнительные параметры
-
+Дополнительные параметры:
+```python
 reader = pdf_converter(
     include_tables=True,          # Извлекать таблицы (по умолчанию: True)
     include_metadata=True,        # Включать метаданные (по умолчанию: True)
@@ -40,10 +40,10 @@ reader = pdf_converter(
     table_settings={...},         # Настройки извлечения таблиц
     default_log_dir="logs"        # Директория для логов
 )
-
-Примеры использования
+```
+Примеры использования.  
 Обработка руководства администратора
-
+```python
 from user_manual_pdf_converter import pdf_converter
 
 reader = pdf_converter()
@@ -60,9 +60,9 @@ for section in documents[1:]:
     print(f"\nРаздел {'.'.join(section.metadata['hierarchy']}: {section.metadata['title']}")
     print(f"Страницы: {section.metadata['start_page']}-{section.metadata['end_page']}")
     print(section.text[:200] + "...")  # Печать первых 200 символов
-
+```
 Настройка извлечения таблиц
-
+```python
 custom_settings = {
     "vertical_strategy": "text",
     "horizontal_strategy": "text",
@@ -74,7 +74,7 @@ custom_settings = {
 
 reader = pdf_converter(table_settings=custom_settings)
 documents = reader.load_data("документ_с_таблицами.pdf")
-
+```
 Особенности работы
 1. Автоматическое определение структуры:
  - Разделы определяются по нумерации заголовков (например, "1.2.3 Название раздела")
@@ -95,7 +95,6 @@ documents = reader.load_data("документ_с_таблицами.pdf")
 Рекомендации по использованию
 1. Для технических руководств рекомендуется включать извлечение таблиц (include_tables=True)
 2. При обработке документов с нестандартной структурой может потребоваться настройка параметров default_top_margin и default_bottom_margin
-
-Логи работы сохраняются в указанную директорию (по умолчанию "logs")
+3. Логи работы сохраняются в указанную директорию (по умолчанию "logs")
 
 
